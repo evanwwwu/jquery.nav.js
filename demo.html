@@ -64,7 +64,11 @@
 </body>
 <script type="text/javascript">
 $(function(){
-	$(".nav").navscroll();
+	$(".nav").navscroll({
+		sec:1000,
+		url_hash:true,
+		head_hight:80
+	});
 })
 </script>
 </html>
