@@ -30,7 +30,7 @@
  		var scroll_event = function($ele) {
  			$(window).on("scroll", function() {
  				for (var x = 0; x < anchor.length; x++) {
- 					console.log(anchor[x].top +"/"+$(window).scrollTop()+"/"+anchor[x].bottom);
+ 					// console.log(anchor[x].anchor+":::"+anchor[x].top +"/"+$(window).scrollTop()+"/"+anchor[x].bottom);
  					if ($(window).scrollTop() >= anchor[x].top && $(window).scrollTop() < anchor[x].bottom) {
  						$ele.children().removeClass("on");
  						$ele.children().eq(x).addClass("on");
@@ -70,7 +70,7 @@
  				obj_data = {
  					anchor: anchor_id,
  					top: div_top - _settings.head_hight,
- 					bottom: div_top + $("#" + anchor_id).height()
+ 					bottom: div_top  - _settings.head_hight + $("#" + anchor_id).height()
  				}
  				anchor.push(obj_data);
  			});
