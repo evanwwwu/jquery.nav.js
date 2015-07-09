@@ -63,7 +63,7 @@
  				var div_top = ($(document).find("[data-anchor="+anchor_id+"]").length > 0) ? $(document).find("[data-anchor="+anchor_id+"]").offset().top : 0;
  				$(this).click(function() {
  					wait = true;
- 					location.hash = anchor_id;
+ 					// location.hash = anchor_id;
  					$('html, body').stop().animate({
  						scrollTop: div_top - _settings.head_hight
  					}, _settings.sec, _settings.linear,function(){
