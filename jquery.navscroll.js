@@ -24,7 +24,8 @@
  			$(window).on("scroll", function() {
  				wait = true;
  				for (var x = 0; x < anchor.length; x++) {
- 					if ($(window).scrollTop() >= anchor[x].top && $(window).scrollTop() < anchor[x].bottom) {
+ 					var anchor_id = anchor[x].anchor;
+ 					if ($(window).scrollTop() >= $(document).find("[data-anchor="+anchor_id+"]").offset().top-_settings.head_hight && $(window).scrollTop() < $(document).find("[data-anchor="+anchor_id+"]").offset().top+$(document).find("[data-anchor="+anchor_id+"]").height()-_settings.head_hight) {
  						if($ele.children(".on").data("nav") != anchor[x].anchor){
  							// location.hash = anchor[x].anchor;
  							$ele.children().removeClass("on");
@@ -60,9 +61,10 @@
  			var child = $(this).children();
  			child.each(function(inx) {
  				var anchor_id = $(this).data("nav");
- 				var div_top = ($(document).find("[data-anchor="+anchor_id+"]").length > 0) ? $(document).find("[data-anchor="+anchor_id+"]").offset().top : 0;
  				$(this).click(function() {
  					wait = true;
+ 					var div_top = ($(document).find("[data-anchor="+anchor_id+"]").length > 0) ? $(document).find("[data-anchor="+anchor_id+"]").offset().top : 0;
+
  					// location.hash = anchor_id;
  					$('html, body').stop().animate({
  						scrollTop: div_top - _settings.head_hight
@@ -72,8 +74,8 @@
  				});
  				obj_data = {
  					anchor: anchor_id,
- 					top: div_top - _settings.head_hight,
- 					bottom: div_top  - _settings.head_hight + $(document).find("[data-anchor="+anchor_id+"]").height()
+ 					// top: div_top - _settings.head_hight,
+ 					// bottom: div_top  - _settings.head_hight + $(document).find("[data-anchor="+anchor_id+"]").height()
  				}
  				anchor.push(obj_data);
  			});
