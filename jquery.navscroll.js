@@ -11,7 +11,7 @@
  			url_hash: false,   //IE9 + 
  			head_hight: 0   //px
  		}
- 		var wait = false;
+ 		var wait = false,cwait=false;
  		var anchor = [];
  		var _settings = $.extend(_defaultset, settings);
 
@@ -25,9 +25,9 @@
  				wait = true;
  				for (var x = 0; x < anchor.length; x++) {
  					var anchor_id = anchor[x].anchor;
- 					if ($(window).scrollTop() >= $(document).find("[data-anchor="+anchor_id+"]").offset().top-_settings.head_hight && $(window).scrollTop() < $(document).find("[data-anchor="+anchor_id+"]").offset().top+$(document).find("[data-anchor="+anchor_id+"]").height()-_settings.head_hight) {
+ 					if (!cwait && $(window).scrollTop() >= $(document).find("[data-anchor="+anchor_id+"]").offset().top-_settings.head_hight && $(window).scrollTop() < $(document).find("[data-anchor="+anchor_id+"]").offset().top+$(document).find("[data-anchor="+anchor_id+"]").height()-_settings.head_hight) {
  						if($ele.children(".on").data("nav") != anchor[x].anchor){
- 							// location.hash = anchor[x].anchor;
+ 							location.hash = anchor[x].anchor;
  							$ele.children().removeClass("on");
  							$ele.children().eq(x).addClass("on");
  						}
@@ -37,7 +37,6 @@
  						$ele.children().removeClass("on");
  					}
  				}
- 				wait = false;
  			});
  		}
  		if(_settings.url_hash){
@@ -45,10 +44,11 @@
  			if ("onhashchange" in window) {
  				$(window).bind('hashchange', function(e) {
  					e.preventDefault();
- 					hash = location.hash.replace("#","")
+ 					hash = location.hash.replace("#","");
  					if(!wait){
  						animate_scroll($(document).find("[data-anchor="+hash+"]").offset().top);
  					}
+ 					wait = false;
  					return false;
  				});
  			}
@@ -63,19 +63,17 @@
  				var anchor_id = $(this).data("nav");
  				$(this).click(function() {
  					wait = true;
+ 					cwait = true;
  					var div_top = ($(document).find("[data-anchor="+anchor_id+"]").length > 0) ? $(document).find("[data-anchor="+anchor_id+"]").offset().top : 0;
-
- 					// location.hash = anchor_id;
+ 					location.hash = anchor_id;
  					$('html, body').stop().animate({
  						scrollTop: div_top - _settings.head_hight
  					}, _settings.sec, _settings.linear,function(){
- 						wait = false;
+ 						cwait = false;
  					});
  				});
  				obj_data = {
- 					anchor: anchor_id,
- 					// top: div_top - _settings.head_hight,
- 					// bottom: div_top  - _settings.head_hight + $(document).find("[data-anchor="+anchor_id+"]").height()
+ 					anchor: anchor_id
  				}
  				anchor.push(obj_data);
  			});
