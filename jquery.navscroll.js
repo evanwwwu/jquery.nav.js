@@ -22,7 +22,7 @@
             }, _settings.sec, _settings.linear);
         }
         var scroll_event = function($ele) {
-            $(window).on("scroll", function() {
+            $(window).off("scroll").on("scroll", function() {
                 wait = true;
                 for (var x = 0; x < anchor.length; x++) {
                     var anchor_id = anchor[x].anchor;
@@ -32,6 +32,16 @@
                                 if (_settings.url_hash) location.hash = anchor[x].anchor;
                                 $ele.find("[data-nav]").removeClass("on");
                                 $ele.find("[data-nav]").eq(x).addClass("on");
+                                $("[data-anchor]").removeClass("on");
+                                $("[data-anchor]").eq(x).addClass("on");
+                                var callback = $("[data-anchor]").eq(x).data("callback");
+                                if (callback){
+                                    var sp = callback.split("(");
+                                    var fun = sp[0];
+                                    var params = sp[1].replace(")", "").split(",");
+                                    var fun = window[fun];
+                                    fun.apply(null, params);
+                                }
                             }
                             break;
                         }

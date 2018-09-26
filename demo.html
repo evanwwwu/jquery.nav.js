@@ -48,7 +48,7 @@
 	</section>
 	<section class="h500">
 	</section>
-	<section id="test2" data-anchor="xtest2" class="h500">
+	<section id="test2" data-anchor="xtest2" data-callback="test2(hihihi)" class="h500">
 	</section>
 	<section id="test3" data-anchor="xtest3" class="h500">
 	</section>
@@ -77,5 +77,8 @@ $(function(){
 		head_hight:80
 	});
 })
+function test2(text){
+	alert("321" + text);
+}
 </script>
 </html>
